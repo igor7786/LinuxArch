@@ -1,0 +1,292 @@
+1 Download linux arch ISO image from https://www.archlinux.org/download/
+copy nanoroc to /etc/
+2 Mount ISO image and Burn with rufus or gnome-disk
+3 Set bios to load from usb press F2
+4 Configure network sudo rfkill unblock all, ip link set wlan0 up, iwctl , station wlan0 get-connections, iwctl station
+wlan0 connect, ping google.com. 
+5 Configure disks lsblk -f, gdisk /dev/choose_device, press x,z, sudo pacman -Sy, sudo fdisk /dev/sdx ,press g,n,
+partition 1, press enter enter , w -> sudo mkfs.ext4 -f /dev/sdX1
+change file /etc/fstab -> /dev/sda1 second disk -> UUID=13538942-3c4b-4a8a-a77c-80295a9b43df /run/media/igor7787/13538942-3c4b-4a8a-a77c-80295a9b43df ext4 defaults,x-gvfs-show 0 2,
+
+
+mkdir /run/media/name_of_disk, sudo mount /dev/sda1 /run/media/name_of_disk,
+sudo mkfs.ext4 -f /dev/sdb1
+udisksctl mount -b /dev/sda1
+sudo systemctl enable udisks2.service
+sudo systemctl start udisks2.service
+sudo mount -a
+sudo systemctldaemon-reload
+
+reboot after first load
+
+executible :
+chmod +x my_script.sh
+
+
+PYCHARM----------> curl -L -o pycharm-professional.tar.gz https://download.jetbrains.com/python/pycharm-pro
+fessional-2024.3.1.tar.gz
+sudo mv pycharm-2024.3.1 /opt/pycharm-professional
+
+check permission
+permissions: ll
+igor7786@arch ~> chmod u+w /home/igor7786/PycharmProjects/
+igor7786@arch ~> sudo chown -R igor7786:igor7786 /home/igor7786/PycharmProjects/
+ls -ld /usr/share/icons/McMojave-circle
+
+important: wget https://archive.archlinux.org/packages/l/libxcursor/
+libxcursor-1.1.14-1-x86_64.pkg.tar.xz
+sudo pacman -U libxcursor-1.1.14-1-x86_64.pkg.tar.xz
+sudo nano /etc/pacman.conf -> IgnorePkg   = libxcursor
+IgnorePkg   = libxcursor
+
+
+after load first time restart mainmod + Q -> restart then cd /.config/hypr/ -> sudo nano hyprland.config
+change terminal chsh->pasword -> /usr/bin/fish
+
+
+nano /etc/fstab ->#/dev/sda1 second disk ->
+UUID=13538942-3c4b-4a8a-a77c-80295a9b43df /run/media/igor7787/13538942-3c4b-4a8a-a77c-80295a9b43df ext4 defaults,x-gvfs-show 0 2,
+sudo chgrp plugdev /media/ssd2
+sudo chmod g+rws /media/ssd2
+sudo chmod +t /media/ssd2
+
+
+Search for a package:
+sudo pacman -Ss package_name
+Update:
+sudo pacman -Syu
+sudo pacman -S wget,curl, fastfetch, networkmanager,mako,udiskie, fish->chsh->/bin/fish,archlinux-keyring ,exa, git,gnome-disk-utillity,archinstall, ->run archinstall
+
+Paru:
+sudo pacman -S --needed base-devel git
+git clone https://aur.archlinux.org/paru-bin.git
+cd paru-bin
+makepkg -si
+
+Yay:
+sudo pacman -S --needed base-devel git
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+
+
+Meson:
+sudo pacman -S meson ninja
+navigate to git package
+meson setup build
+ninja -C build
+sudo ninja -C build install
+sudo ninja -C build uninstall
+
+CPU-POWER:
+sudo nano /etc/systemd/system/set-cpu-governor.service
+
+[Unit]
+Description=Set CPU governor to performance
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/cpupower frequency-set -g performance
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl enable set-cpu-governor.service
+sudo systemctl start set-cpu-governor.service
+systemctl status set-cpu-governor.service
+cpupower frequency-info
+
+
+
+uninstall programs sudo pacman -R name_of_program
+
+after install
+nwg -> wget https://raw.github.com/nwg-piotr/nwg-shell/main/install/arch.sh
+in nwg-panel amend output HDMI-A-1
+
+fish-> jorgebucaran/fisher
+Sudo pacman -S fisher fzf bat fd
+fisher install patrickf1/fzf.fish
+fisher install dracula/fish -> add to config.fish -> fish_config theme choose "Dracula Official", set fzf_fd_opts --hidden --max-depth 5
+fisher install jethrokuan/z
+sudo pacman -S tar unzip p7zip xz bzip2 gzip unrar
+sudo pacman -S ttf-nerd-fonts-symbols
+git clone git clone https://github.com/vinceliuice/Mojave-gtk-theme.git
+git clone https://github.com/vinceliuice/McMojave-circle.git
+sudo pacman -S gvfs
+gtk-update-icon-cache
+
+Download Hack, unpack -> to /usr/share/fonts,
+
+Themes:
+
+Hack
+unpack -> sudo mv /home/igor7787/Downloads/Hack /usr/share/fonts
+after gtk Settings
+
+Same for mononoki
+
+
+for exa symbols sudo pacman -S ttf-nerd-fonts-symbols
+
+
+pycharm -> download, -> move to /opt/pycharm-proffesional, sudo ln -s /opt/pycharm-profesional/bin/pycharm /usr/bin/pycharm
+extract settings-zip file
+
+
+sddm -> sugar candy ->https://store.kde.org/p/1312658/
+unpack sugar-cndy -> sudo mv sugar-cndy /usr/share/sddm/themes
+cd /etc/sddm.conf.d/ && sudo nano kde_settings.conf
+
+[Autologin]
+Relogin=false
+Sessions=awesome  # Make sure this is correctly named for AwesomeWM
+
+[General]
+HaltCommand=/usr/bin/systemctl poweroff
+RebootCommand=/usr/bin/systemctl reboot
+SuspendCommand=/usr/bin/systemctl suspend
+
+[Theme]
+Current=sugar-candy  # Ensure this theme is installed correctly
+
+[Users]
+MaximumUid=60000
+MinimumUid=1000
+sudo pacman -S qt5-graphicaleffects qt5-quickcontrols2 qt5-svg
+
+chntpw - remove Windows passwords ->https://www.youtube.com/watch?v=44mqR_n2NP4
+libreoffice -> word,exel,powerpooint
+
+(https://www.youtube.com/watch?v=D8D7voS-G_o&t=786s -> mindblowing arch Linux Setup)
+
+installation guide -https://www.youtube.com/watch?v=nv40SUNH8Iw&t=428s, https://www.youtube.com/watch?v=AYxaNjbC1wg&t=390s
+disks https://www.youtube.com/watch?v=kdcaqSLs6Y8
+nwg -> https://www.youtube.com/watch?v=1cK3SgRYqeA
+geany-https://www.youtube.com/watch?v=N-ZXBt2cETs&t=543s
+sddm-https://www.youtube.com/watch?v=2p7FINJSlAk&t=616s
+monspacedfonts-https://www.youtube.com/watch?v=nv40SUNH8Iw&t=428s
+
+disk test -> https://www.simplified.guide/linux/disk-error-check
+ram test -> https://www.baeldung.com/linux/ram-testing#:~:text=Using%20memtester,while%20the%20system%20is%20active
+windows key -> sudo cat /sys/firmware/acpi/tables/MSDM
+
+
+install firewall
+sudo pacman -S firewalld
+sudo systemctl enable firewalld
+sudo systemctl start firewalld
+
+
+?install power top
+?sudo pacman -S powertop
+?sudo powertop --auto-tune
+after evrithing is slow
+
+sudo priveliges:
+/etc/sudo.config
+
+cpu limit
+paru -S cpulimit
+cd /home/igor7786/.cache/paru/clone/cpulimit/
+makepkg -si
+if printing all dependancies shift+Q
+
+
+/home/igor7786/.config/scripts/limit_cpu_usage.sh
+#!/bin/bash
+
+# Get the number of CPU cores on the system
+NUM_CPU_CORES=$(nproc --all)
+
+# Function to apply cpulimit and display debug info
+limit_cpu_usage() {
+  local process_name=$1
+  local percentage=$2
+  local limit_value=$((percentage * NUM_CPU_CORES))
+
+  while true; do
+    # Check if the process is running
+    pids=$(pgrep -f "$process_name")
+
+    # If any PIDs are found, apply the CPU limit
+    if [ -n "$pids" ]; then
+      for pid in $pids; do
+        # Check if cpulimit is already applied to this PID
+        if ! pgrep -f "cpulimit -p $pid" > /dev/null; then
+          echo "Applying CPU limit: $process_name (PID: $pid) limited to $limit_value% overall."
+          cpulimit -p "$pid" -l "$limit_value" &
+        fi
+      done
+    else
+      echo "No instances of $process_name found."
+    fi
+
+    sleep 10  # Check every 10 seconds to avoid spawning too many cpulimit processes
+  done
+}
+
+# Limit PyCharm CPU usage to 30% per core
+limit_cpu_usage "pycharm" 30
+
+create sudo nano /etc/systemd/system/limit_cpu_usage.service
+
+[Unit]
+Description=Limit CPU usage of specific processes at startup
+After=network.target
+
+[Service]
+User=igor7786
+ExecStart=/home/igor7786/.config/scripts/limit_cpu_usage.sh
+Restart=always
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
+
+copy folder scripts in .config
+sudo systemctl enable limit_cpu_usage.service
+sudo systemctl start limit_cpu_usage.service
+journalctl -u limit_cpu_usage.service -fa
+
+
+
+nwg-panel -> executors cpuav -> On left click -> GTK_THEME=Mojave-Dark:dark missioncenter
+
+in /home/igor7786/.config/nwg-panel/hyprland1,
+delete --->"button-launcher",
+"menu-start": "off",
+    "menu-start-settings": {},
+    "executor-cpuav": {
+      "script": "gopsuinfo -i a",
+      "tooltip-text": "average CPU load",
+---------->"on-left-click": "env GTK_THEME=Mojave-Dark:dark missioncenter ",
+      "on-middle-click": "",
+      "on-right-click": "",
+      "on-scroll-up": "",
+      "on-scroll-down": "",
+      "root-css-name": "",
+      "css-name": "",
+      "icon-placement": "right",
+      "icon-size": 16,
+      "interval": 3
+    },"
+
+python installation
+unpack Python-3.13.0.tar.xz
+cd Python-3.13.0
+sudo pacman -S base-devel openssl zlib bzip2 xz readline sqlite libffi tk
+./configure --enable-optimizations --prefix=/usr/local
+make -j$(nproc)
+sudo make altinstall
+python3.13 --version
+
+sudo pacman -S gvfs 1.56.1-1
+
+Gitkraken:
+git clone https://github.com/Azd325/gitkraken.git
+cd gitkraken/gitkraken-aur
+ makepkg --syncdeps --install
+
