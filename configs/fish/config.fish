@@ -74,7 +74,13 @@ if status is-interactive
 	function g
     git $argv
     end
+    function ga
+        git add $argv
+    end
 
+    function gb
+        git branch $argv
+    end
     function gbs
         git switch $argv
     end
@@ -84,13 +90,14 @@ if status is-interactive
     end
 
     function gc
-        git commit -v $argv
+        git commit -v -m $argv
     end
-
-    function gca
-        git commit -v -a $argv
+    function gcrs
+        git reset --soft HEAD^1
     end
-
+    function gcrh
+        git reset --hard HEAD^1
+    end
     function gd
         git diff | mate
     end
@@ -100,7 +107,7 @@ if status is-interactive
     end
 
     function gp
-        git push $argv
+        git push -u $argv
     end
     function gm
         git merge $argv
@@ -113,3 +120,6 @@ if status is-interactive
         git log --oneline --graph --decorate --all
     end
 end
+
+# Created by `pipx` on 2025-01-25 08:29:36
+set PATH $PATH /home/igor7786/.local/bin
