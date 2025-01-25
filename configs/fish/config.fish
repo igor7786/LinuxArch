@@ -93,10 +93,13 @@ if status is-interactive
         git commit -v -m $argv
     end
     function gcrs
-        git reset --soft HEAD^1
+        git reset --soft HEAD^$argv
     end
     function gcrh
-        git reset --hard HEAD^1
+        git reset --hard HEAD^$argv
+    end
+    function gcrm
+        git reset --mixed HEAD^$argv
     end
     function gco
         git checkout $argv
@@ -112,11 +115,18 @@ if status is-interactive
     function gp
         git push -u $argv
     end
+    function gpf
+        git push -f origin $argv
+    end
     function gm
         git merge $argv
     end
     function gmf
-        git checkout frontend -- $argv
+        if test (count $argv) -ge 1
+            git checkout $argv[1] -- $argv[2..-1]
+        else
+            echo "Usage: gmf <branch-name> [files...]"
+        end
     end
 
     function gss
