@@ -290,3 +290,14 @@ git clone https://github.com/Azd325/gitkraken.git
 cd gitkraken/gitkraken-aur
  makepkg --syncdeps --install
 
+Ggshield:
+sudo pacman -S python-pipx
+pipx ensurepath
+pipx install ggshield
+ggshield --version
+pipx ensurepath
+exec $SHELL
+ggshield auth login
+ggshield secret scan repo /home/igor7786/PycharmProjects/PythonProject/astro+fastapi
+
+
