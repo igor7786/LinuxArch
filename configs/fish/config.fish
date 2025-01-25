@@ -98,6 +98,9 @@ if status is-interactive
     function gcrh
         git reset --hard HEAD^1
     end
+    function gco
+        git checkout $argv
+    end
     function gd
         git diff | mate
     end
@@ -118,6 +121,10 @@ if status is-interactive
     end
     function gl
         git log --oneline --graph --decorate --all
+    end
+
+    function gsk
+         ggshield $argv
     end
 end
 
