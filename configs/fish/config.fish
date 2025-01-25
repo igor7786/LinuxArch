@@ -1,6 +1,14 @@
 if status is-interactive
 	# Commands to run in interactive sessions can go here
+	#Dracula theme
 	fish_config theme choose "Dracula Official"
+
+	#Show hidden files
+	set fzf_fd_opts --hidden --max-depth 5
+    function rfish
+        source ~/.config/fish/config.fish
+    end
+    # Extract archives
 	function unpack
 		if test -z "$argv[1]"
 			echo "Usage: unpack <file>"
@@ -38,13 +46,14 @@ if status is-interactive
 				echo "'$argv[1]' cannot be extracted via unpack()"
 		end
 	end
+	# List files
 	function ll
 		exa --icons -abghHliS
 	end
 	function cc
 		clear
 	end
-	
+	# Remove a file or directory
 	function rr
 		if test (count $argv) -eq 0
 			echo "Usage: rr <file-or-directory>"
@@ -59,7 +68,48 @@ if status is-interactive
 			echo "Error: $argv[1] does not exist"
 			return 1
 		end
+
 	end
+	#Git
+	function g
+    git $argv
+    end
 
+    function gbs
+        git switch $argv
+    end
 
+    function gbm
+        git branch -M $argv
+    end
+
+    function gc
+        git commit -v $argv
+    end
+
+    function gca
+        git commit -v -a $argv
+    end
+
+    function gd
+        git diff | mate
+    end
+
+    function gl
+        git pull $argv
+    end
+
+    function gp
+        git push $argv
+    end
+    function gm
+        git merge $argv
+    end
+
+    function gss
+        git status --short
+    end
+    function gl
+        git log --oneline --graph --decorate --all
+    end
 end
