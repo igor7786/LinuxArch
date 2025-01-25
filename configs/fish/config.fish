@@ -115,6 +115,9 @@ if status is-interactive
     function gm
         git merge $argv
     end
+    function gmf
+        git checkout frontend -- $argv
+    end
 
     function gss
         git status --short
