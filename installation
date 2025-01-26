@@ -247,6 +247,7 @@ Type=simple
 WantedBy=multi-user.target
 
 copy folder scripts in .config
+sudo systemctl status limit_cpu_usage.service
 sudo systemctl enable limit_cpu_usage.service
 sudo systemctl start limit_cpu_usage.service
 journalctl -u limit_cpu_usage.service -fa
