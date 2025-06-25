@@ -1,3 +1,4 @@
+# /etc/network/interfaces
 ### phone wifi ###
 auto lo
 iface lo inet loopback
@@ -20,8 +21,12 @@ iface vmbr0 inet static
 	bridge_stp off
 	bridge_fd 0
 	post-up echo 1 > /proc/sys/net/ipv4/ip_forward
-	post-up iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o wlp2s0 -j MASQUERADE
-	post-down iptables -t nat -D POSTROUTING -s 192.168.100.0/24 -o wlp2s0 -j MASQUERADE
+    post-up iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o wlp2s0 -j MASQUERADE
+    post-up iptables -t nat -A PREROUTING -i wlp2s0 -p tcp --dport 2222 -j DNAT --to-destination 192.168.100.10:22
+    post-up iptables -A FORWARD -p tcp -d 192.168.100.10 --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+    post-down iptables -t nat -D POSTROUTING -s 192.168.100.0/24 -o wlp2s0 -j MASQUERADE
+    post-down iptables -t nat -D PREROUTING -i wlp2s0 -p tcp --dport 2222 -j DNAT --to-destination 192.168.100.10:22
+    post-down iptables -D FORWARD -p tcp -d 192.168.100.10 --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 
 
 
@@ -32,27 +37,27 @@ iface vmbr0 inet static
 
 #auto wlp2s0
 #iface wlp2s0 inet static
- #   address 192.168.0.71
-  #  netmask 255.255.255.0
-   # gateway 192.168.0.1
+    #address 192.168.0.71
+    #netmask 255.255.255.0
+    #gateway 192.168.0.1
     #dns-domain igorfastapi
     #dns-nameservers 194.168.4.100 194.168.8.100 8.8.8.8 1.1.1.1
     #wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
 
 #auto vmbr0
 #iface vmbr0 inet static
- #   address 192.168.100.1
-  #  netmask 255.255.255.0
-   # bridge_ports none
-  #  bridge_stp off
-  #  bridge_fd 0
+    #address 192.168.100.1
+    #netmask 255.255.255.0
+    #bridge_ports none
+    #bridge_stp off
+    #bridge_fd 0
 
-   # post-up echo 1 > /proc/sys/net/ipv4/ip_forward
-   # post-up iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o wlp2s0 -j MASQUERADE
-   # post-up iptables -t nat -A PREROUTING -i wlp2s0 -p tcp --dport 2222 -j DNAT --to-destination 192.168.100.10:22
-   # post-up iptables -A FORWARD -p tcp -d 192.168.100.10 --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+    #post-up echo 1 > /proc/sys/net/ipv4/ip_forward
+    #post-up iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o wlp2s0 -j MASQUERADE
+    #post-up iptables -t nat -A PREROUTING -i wlp2s0 -p tcp --dport 2222 -j DNAT --to-destination 192.168.100.10:22
+    #post-up iptables -A FORWARD -p tcp -d 192.168.100.10 --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 
     #post-down iptables -t nat -D POSTROUTING -s 192.168.100.0/24 -o wlp2s0 -j MASQUERADE
     #post-down iptables -t nat -D PREROUTING -i wlp2s0 -p tcp --dport 2222 -j DNAT --to-destination 192.168.100.10:22
-   # post-down iptables -D FORWARD -p tcp -d 192.168.100.10 --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+    #post-down iptables -D FORWARD -p tcp -d 192.168.100.10 --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 
