@@ -82,3 +82,8 @@ sudo ./setup_proxmox_wifi_nat.sh
 sudo nano /etc/resolv.conf-> nameserver 8.8.8.8 nameserver 1.1.1.1
 gateway 192.168.102.229 -> ip r -> default via ->192.168.102.229<- dhcp src 192.168.102.210 metric 600
 
+links:
+sudo /etc/wpa_supplicant/wpa_supplicant.conf
+sudo nano /etc/network/interfaces
+sudo nano /etc/resolv.conf
+sudo nano /etc/hosts
