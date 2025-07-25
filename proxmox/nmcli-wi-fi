@@ -1,0 +1,19 @@
+sudo nano /etc/network/interfaces
+#Only keep:
+auto lo
+iface lo inet loopback
+sudo nano /etc/NetworkManager/NetworkManager.conf
+[main]
+plugins=ifupdown,keyfile
+
+[ifupdown]
+managed=true
+sudo systemctl restart NetworkManager
+| Task                          | Command                                            |
+| ----------------------------- | -------------------------------------------------- |
+| List available Wi-Fi networks | `nmcli device wifi list`                           |
+| Rescan for new Wi-Fi networks | `nmcli device wifi rescan`                         |
+| Connect to a Wi-Fi network    | `nmcli device wifi connect "SSID" password "pass"` |
+| Show saved connections        | `nmcli connection show`                            |
+| Bring up a saved connection   | `nmcli connection up NAME`                         |
+
