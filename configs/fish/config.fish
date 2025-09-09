@@ -2,12 +2,18 @@ if status is-interactive
 	# Commands to run in interactive sessions can go here
 	#Dracula theme
 	fish_config theme choose "Dracula Official"
-
+	#Starship
+	starship init fish | source
 	#Show hidden files
 	set fzf_fd_opts --hidden --max-depth 5
     function rfish
         source ~/.config/fish/config.fish
     end
+    # Auto-activate backend venv when in project folder
+    # if test -f /home/igor7786/PycharmProjects/PythonProject/AsrtoFastapi/backend/.venv/bin/activate.fish
+    #     source /home/igor7786/PycharmProjects/PythonProject/AsrtoFastapi/backend/.venv/bin//activate.fish
+    # end
+
     # Extract archives
 	function unpack
 		if test -z "$argv[1]"
@@ -143,3 +149,7 @@ end
 
 # Created by `pipx` on 2025-01-25 08:29:36
 set PATH $PATH /home/igor7786/.local/bin
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
