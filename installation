@@ -78,6 +78,10 @@ ninja -C build
 sudo ninja -C build install
 sudo ninja -C build uninstall
 
+#Ai cli
+ sudo npm install -g @qwen-code/qwen-code@latest
+ -> .qwen -> oauth_creds.json-> for kilo agent
+
 CPU-POWER:
 sudo nano /etc/systemd/system/set-cpu-governor.service
 
