@@ -3,7 +3,7 @@ copy nanoroc to /etc/
 2 Mount ISO image and Burn with rufus or gnome-disk
 3 Set bios to load from usb press F2
 4 Configure network sudo rfkill unblock all, ip link set wlan0 up, iwctl , station wlan0 get-connections, iwctl station
-wlan0 connect, ping google.com. 
+wlan0 connect, ping google.com.
 5 Configure disks lsblk -f, gdisk /dev/choose_device, press x,z, sudo pacman -Sy, sudo fdisk /dev/sdx ,press g,n,
 partition 1, press enter enter , w -> sudo mkfs.ext4 -f /dev/sdX1
 change file /etc/fstab -> /dev/sda1 second disk -> UUID=13538942-3c4b-4a8a-a77c-80295a9b43df /run/media/igor7787/13538942-3c4b-4a8a-a77c-80295a9b43df ext4 defaults,x-gvfs-show 0 2,
@@ -113,6 +113,23 @@ fisher install dracula/fish -> add to config.fish -> fish_config theme choose "D
 fisher install jethrokuan/z
 sudo pacman -S tar unzip p7zip xz bzip2 gzip unrar
 sudo pacman -S ttf-nerd-fonts-symbols
+sudo pacman -S starship
+starship preset nerd-font-symbols -o ~/.config/starship.toml
+add to first line -> add_newline = false
+add to end -> #modified
+
+[character]
+success_symbol = '[➜](bold green)'
+error_symbol = '[✗](bold red) '
+
+[cmd_duration]
+format = "[](bold blue) completed [󰞌](bold red) [$duration]($style) "
+style = "bold green"
+show_notifications = true
+min_time_to_notify = 100000
+notification_timeout = 3000
+
+
 git clone git clone https://github.com/vinceliuice/Mojave-gtk-theme.git
 git clone https://github.com/vinceliuice/McMojave-circle.git
 sudo pacman -S gvfs
